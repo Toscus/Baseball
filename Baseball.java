@@ -1,4 +1,4 @@
-/** Baseball is played by trying to guess a three digit number. 
+/** Baseball is played by trying to guess a three digit number.
  * Each digit is unique within the number. The digits must be guessed in the correct order.
  * A whiff is when the guesser hasn't guessed a single digit within the 3 digit number.
  * A ball is when the guesser has guessed a digit, but it's in the wrong position.
@@ -13,13 +13,13 @@ public class Baseball {
     	int digits = 3;
         int wins = 0;
         boolean playAgain = true;
-        
+
         while(playAgain){
             digits = askForDigits();
-            int[] number = randNumber(digits);
-			
+            int[] number = NumberGenerator.randNumber(digits);
+
 //			  for (int i:number){ System.out.print(i); }
-			 
+
             System.out.println();
             int strikes = 0;
             int tries = 0;
@@ -36,57 +36,20 @@ public class Baseball {
         System.out.println("Thanks for playing! You won " + wins + " time(s)!");
     }
     /**
-     * This function generates a random number of x number of digits without repeating any digits. It utilizes the removeElt function
-     * to remove an element from the array "list" so that no two digits are the same within the number.
-     * @param x this is the number of digits the number will have.
-     * @return integer array of the final number
-     */
-    public static int[] randNumber(int x){
-        int[] number =  new int[x];
-        int[] list = {0,0,1,2,3,4,5,6,7,8,9};
-        int position;
-        for (int i = 0; i < x; i++){
-            position = (int)(Math.random()*(10-i)+1);
-            if(position < 0){
-                position = 0;
-            }
-            number[i]= list[position];
-            //System.out.println(i);
-            removeSelectedNum(list, position);
-        }
-        
-        return number; 
-    }
-    
-    /**
-     * This function removes the digit that randNumber selected for each position so that a number can not be randomly selected more than once.
-     * @param arr List of digits to be overwritten
-     * @param remIndex Position within the array "list" that is to be overwritten.
-     * @return The shortened array of digits
-     */
-    public static int[] removeSelectedNum( int [] arr, int remIndex )
-    {
-       for ( int i = remIndex ; i < arr.length - 1 ; i++ )
-       {
-          arr[ i ] = arr[ i + 1 ] ; 
-       }
-       return arr;
-    }
-    /**
      * To ask for guess
      * @param digits previous guess
      * @return current guess
      */
     public static int[] guess(int digits){
-        
+
         String g = CS160Input.readString("What is your guess? \n");
         String[] numberStr = g.split("");
         int[] numbers = new int[numberStr.length];
-        
+
         for (int i = 0; i < numberStr.length; i++){
             numbers[i] = Integer.parseInt(numberStr[i]);
         }
-        
+
         while(digits != numbers.length){
             g = CS160Input.readString("What is your guess? It must be " + digits + " digits long as that is what you choose upon initialization. ");
             numberStr = g.split("");
@@ -95,7 +58,7 @@ public class Baseball {
         for (int i = 0; i < numberStr.length; i++){
             numbers[i] = Integer.parseInt(numberStr[i]);
         }
-        
+
         return numbers;
     }
     /**
@@ -106,13 +69,13 @@ public class Baseball {
      */
     public static int evaluateGuess(int[] g, int[] a){
         int[] record = new int[a.length];
-        
+
         for(int i = 0; i < a.length; i++){
             if(g[i] == a[i]){
                 record[i] = 2;
                 //System.out.println("record " + i + " is a strike.");
             }
-            
+
         }
         int balls = 0;
         int strikes = 0;
@@ -131,11 +94,11 @@ public class Baseball {
                 }
             }
         }
-        
+
         if (balls == 0 && strikes == 0) {
         	System.out.println("That was a whiff!");
         } else if (strikes == a.length){
-        	
+
         } else {
         	System.out.println("That is " + balls + " balls and " + strikes + " strikes!");
         }
@@ -153,7 +116,7 @@ public class Baseball {
         return digits;
     }
     /**
-     * 
+     *
      * @return
      */
     public static boolean askPlayAgain(){
@@ -173,8 +136,4 @@ public class Baseball {
         } while (fin);
         return play;
     }
-    
-    
-    
-    
 }
